@@ -1,10 +1,14 @@
-if [ -r "$HOME/.config/sensible.bash" ]; then
-    source "$HOME/.config/sensible.bash"
+if [ -t 1 ]; then
+    # standard output is a tty
+    # do interactive initialization
+    if [ -r "$HOME/.config/sensible.bash" ]; then
+        source "$HOME/.config/sensible.bash"
+    fi
+    # patch sensible.bash
+    bind "set show-all-if-ambiguous off"
+    HISTFILESIZE=10000
+    HISTSIZE=5000
 fi
-# patch sensible.bash
-bind "set show-all-if-ambiguous off"
-HISTFILESIZE=10000
-HISTSIZE=5000
 
 # common
 if which youtube-dl >/dev/null; then
