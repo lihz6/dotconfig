@@ -11,9 +11,11 @@ if [ -t 1 ]; then
 fi
 
 # common
-alias curl="curl -w '\n\n'"
 if which youtube-dl >/dev/null; then
     alias youtube-dl="youtube-dl --all-subs"
+fi
+if ! which realpath >/dev/null && which python >/dev/null; then
+    alias realpath='python -c "import os, sys; print(os.path.realpath(sys.argv[1]))"'
 fi
 
 export EDITOR=vim
