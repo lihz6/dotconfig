@@ -1,4 +1,5 @@
 if [ -t 1 ]; then
+    OLD_PROMPT_COMMAND="$PROMPT_COMMAND"
     # standard output is a tty
     # do interactive initialization
     if [ -r "$HOME/.config/sensible.bash" ]; then
@@ -6,6 +7,9 @@ if [ -t 1 ]; then
     fi
     # patch sensible.bash
     bind "set show-all-if-ambiguous off"
+    PROMPT_COMMAND="$OLD_PROMPT_COMMAND"
+    unset OLD_PROMPT_COMMAND
+    CDPATH=".:~/Documents"
     HISTFILESIZE=10000
     HISTSIZE=5000
 fi
@@ -37,14 +41,14 @@ if [ $(uname) = Darwin ]; then
         source /usr/local/etc/profile.d/bash_completion.sh
     fi
 
-    if [ "$(pwd)" = "$HOME" ]; then
-        FINDER=$(osascript -e 'tell application "Finder"' -e "${1-1} <= (count Finder windows)" -e "get POSIX path of (target of window ${1-1} as alias)" -e 'end tell' 2>/dev/null)
-        if [ "$FINDER" = "" ]; then
-            cd "$HOME/Documents"
-        else
-            cd "$FINDER"
-        fi
-    fi
+    # if [ "$(pwd)" = "$HOME" ]; then
+    #     FINDER=$(osascript -e 'tell application "Finder"' -e "${1-1} <= (count Finder windows)" -e "get POSIX path of (target of window ${1-1} as alias)" -e 'end tell' 2>/dev/null)
+    #     if [ "$FINDER" = "" ]; then
+    #         cd "$HOME/Documents"
+    #     else
+    #         cd "$FINDER"
+    #     fi
+    # fi
 
     if which wg-quick >/dev/null; then
         _wg0() {
