@@ -35,10 +35,11 @@ if [ $(uname) = Darwin ]; then
 
     # NOTE: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+    export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
 
-    # NOTE: brew install bash-completion
-    if [[ -r /usr/local/etc/profile.d/bash_completion.sh ]]; then
-        source /usr/local/etc/profile.d/bash_completion.sh
+    # NOTE: brew install bash-completion@2
+    if [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]; then
+        source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
     fi
 
     # if [ "$(pwd)" = "$HOME" ]; then
