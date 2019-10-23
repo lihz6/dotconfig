@@ -15,6 +15,7 @@ if [ -t 1 ]; then
 fi
 
 # common
+alias today='date +"%Y-%m-%d"'
 if which youtube-dl >/dev/null; then
     alias youtube-dl="youtube-dl --all-subs"
 fi
