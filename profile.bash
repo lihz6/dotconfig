@@ -22,6 +22,12 @@ fi
 if ! which realpath >/dev/null && which python >/dev/null; then
     alias realpath='python -c "import os, sys; print(os.path.realpath(sys.argv[1]))"'
 fi
+if which git >/dev/null; then
+    alias git-branch='git branch | while read line; do
+        desc=$(git config branch.$(echo "$line" | sed "s/\* //g").description)
+        echo -e "$line\t\t$desc"
+    done'
+fi
 
 export EDITOR=vim
 
