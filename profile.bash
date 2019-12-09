@@ -25,7 +25,7 @@ fi
 if which git >/dev/null; then
     alias git-branch='git branch | while read line; do
         desc=$(git config branch.$(echo "$line" | sed "s/\* //g").description)
-        echo -e "$line\t\t$desc"
+        printf "%-8s\t\t$desc\n" "$line"
     done'
 fi
 
