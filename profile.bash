@@ -16,13 +16,13 @@ fi
 
 # common
 alias today='date +"%Y-%m-%d"'
-if which youtube-dl >/dev/null; then
+if which youtube-dl &>/dev/null; then
     alias youtube-dl="youtube-dl --all-subs"
 fi
-if ! which realpath >/dev/null && which python >/dev/null; then
+if ! which realpath &>/dev/null && which python &>/dev/null; then
     alias realpath='python -c "import os, sys; print(os.path.realpath(sys.argv[1]))"'
 fi
-if which git >/dev/null; then
+if which git &>/dev/null; then
     alias git-branch='git branch | while read line; do
         desc=$(git config branch.$(echo "$line" | sed "s/\* //g").description)
         printf "%-8s\t\t$desc\n" "$line"
@@ -58,7 +58,7 @@ if [ $(uname) = Darwin ]; then
     #     fi
     # fi
 
-    if which wg-quick >/dev/null; then
+    if which wg-quick &>/dev/null; then
         _wg0() {
             if ifconfig utun1 &>/dev/null; then
                 export PS1="*$PS1"
@@ -70,7 +70,7 @@ if [ $(uname) = Darwin ]; then
         _wg0
     fi
 elif [ $(uname) = Linux ]; then
-    if which wg-quick >/dev/null; then
+    if which wg-quick &>/dev/null; then
         _wg0() {
             if ifconfig wg0 &>/dev/null; then
                 export PS1="*$PS1"
@@ -81,6 +81,6 @@ elif [ $(uname) = Linux ]; then
         }
         _wg0
     fi
-else
-    echo '$(uname)' "'$(uname)' not in (Darwin, Linux)"
+# else
+#     echo '$(uname)' "'$(uname)' not in (Darwin, Linux)"
 fi
