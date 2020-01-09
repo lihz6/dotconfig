@@ -23,6 +23,7 @@ if ! which realpath &>/dev/null && which python &>/dev/null; then
     alias realpath='python -c "import os, sys; print(os.path.realpath(sys.argv[1]))"'
 fi
 if which git &>/dev/null; then
+    alias git-amend='git commit --amend -m "$(git log -1 --format=%B)"'
     alias git-branch='git branch | while read line; do
         desc=$(git config branch.$(echo "$line" | sed "s/\* //g").description)
         printf "%-8s\t\t$desc\n" "$line"
@@ -30,6 +31,7 @@ if which git &>/dev/null; then
 fi
 
 export EDITOR=vim
+export PS1='\[\033]0;\W\007\]\[\033[01;32m\]\W\[\033[01;36m\]`__git_ps1`\[\033[00m\]\$ '
 
 if [ $(uname) = Darwin ]; then
     alias ll='ls -alF'
