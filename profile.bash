@@ -1,88 +1,56 @@
-if [ -t 1 ]; then
-    OLD_PROMPT_COMMAND="$PROMPT_COMMAND"
-    # standard output is a tty
-    # do interactive initialization
-    if [ -r "$HOME/.config/sensible.bash" ]; then
-        source "$HOME/.config/sensible.bash"
-    fi
-    # patch sensible.bash
-    bind "set show-all-if-ambiguous off"
-    PROMPT_COMMAND="$OLD_PROMPT_COMMAND"
-    unset OLD_PROMPT_COMMAND
-    CDPATH=".:~/Documents"
-    HISTFILESIZE=10000
-    HISTSIZE=5000
-fi
+# Update window size after every command
+shopt -s checkwinsize
 
-# common
-alias today='date +"%Y-%m-%d"'
-if which youtube-dl &>/dev/null; then
-    alias youtube-dl="youtube-dl --all-subs"
-fi
-if ! which realpath &>/dev/null && which python &>/dev/null; then
-    alias realpath='python -c "import os, sys; print(os.path.realpath(sys.argv[1]))"'
-fi
-if which git &>/dev/null; then
-    alias git-amend='git commit --amend -m "$(git log -1 --format=%B)"'
-    alias git-branch='git branch | while read line; do
-        desc=$(git config branch.$(echo "$line" | sed "s/\* //g").description)
-        printf "%-8s\t\t$desc\n" "$line"
-    done'
-fi
+# Automatically trim long paths in the prompt (requires Bash 4.x)
+PROMPT_DIRTRIM=2
 
-export EDITOR=vim
-export PS1='\[\033]0;\W\007\]\[\033[01;32m\]\W\[\033[01;36m\]`__git_ps1`\[\033[00m\]\$ '
+# Enable history expansion with space
+# E.g. typing !!<space> will replace the !! with your last command
+bind Space:magic-space
 
-if [ $(uname) = Darwin ]; then
-    alias ll='ls -alF'
-    alias la='ls -A'
-    alias l='ls -CF'
+## SMARTER TAB-COMPLETION (Readline bindings) ##
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
 
-    # NOTE: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
-    export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+# Treat hyphens and underscores as equivalent
+bind "set completion-map-case on"
 
-    # NOTE: brew install bash-completion@2
-    if [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]; then
-        source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
-    fi
+# Display matches for ambiguous patterns at first tab press
+# bind "set show-all-if-ambiguous on"
 
-    # if [ "$(pwd)" = "$HOME" ]; then
-    #     FINDER=$(osascript -e 'tell application "Finder"' -e "${1-1} <= (count Finder windows)" -e "get POSIX path of (target of window ${1-1} as alias)" -e 'end tell' 2>/dev/null)
-    #     if [ "$FINDER" = "" ]; then
-    #         cd "$HOME/Documents"
-    #     else
-    #         cd "$FINDER"
-    #     fi
-    # fi
+# Immediately add a trailing slash when autocompleting symlinks to directories
+bind "set mark-symlinked-directories on"
 
-    if which wg-quick &>/dev/null; then
-        _wg0() {
-            if ifconfig utun1 &>/dev/null; then
-                export PS1="*$PS1"
-                alias wg0='if wg-quick down wg0 &>/dev/null; then export PS1=${PS1:1}; _wg0; fi'
-            else
-                alias wg0='if wg-quick up wg0 &>/dev/null; then _wg0; fi'
-            fi
-        }
-        _wg0
-    fi
-elif [ $(uname) = Linux ]; then
-    if which wg-quick &>/dev/null; then
-        _wg0() {
-            if ifconfig wg0 &>/dev/null; then
-                export PS1="*$PS1"
-                alias wg0='if wg-quick down wg0 &>/dev/null; then export PS1=${PS1:1}; _wg0; fi'
-            else
-                alias wg0='if wg-quick up wg0 &>/dev/null; then _wg0; fi'
-            fi
-        }
-        _wg0
-    fi
-# else
-#     echo '$(uname)' "'$(uname)' not in (Darwin, Linux)"
-fi
+## SANE HISTORY DEFAULTS ##
+
+# Enable incremental history search with up/down arrows (also Readline goodness)
+# Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
+
+## BETTER DIRECTORY NAVIGATION ##
+
+# Prepend cd to directory names automatically
+shopt -s autocd &>/dev/null
+# Correct spelling errors during tab-completion
+shopt -s dirspell &>/dev/null
+# Correct spelling errors in arguments supplied to cd
+shopt -s cdspell &>/dev/null
+
+# This defines where cd looks for targets
+# Add the directories you want to have fast access to, separated by colon
+# Ex: CDPATH=".:~:~/projects" will look for targets in the current working directory, in home and in the ~/projects folder
+CDPATH="."
+
+# This allows you to bookmark your favorite places across the file system
+# Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
+# shopt -s cdable_vars
+
+# Examples:
+# export dotfiles="$HOME/dotfiles"
+# export projects="$HOME/projects"
+# export documents="$HOME/Documents"
+# export dropbox="$HOME/Dropbox"
