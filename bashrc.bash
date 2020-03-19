@@ -48,6 +48,14 @@ if ! which realpath &>/dev/null && which python &>/dev/null; then
     alias realpath='python -c "import os, sys; print(os.path.realpath(sys.argv[1]))"'
 fi
 
+function git-review() (
+    set -e
+    git diff-index --quiet "${1:-HEAD}"
+    commit_hash=$(git show-ref --head --hash "$1" | head -1)
+    git checkout $commit_hash^ >/dev/null
+    git checkout $commit_hash -- . >/dev/null
+)
+
 function __uh() {
     if [ "$PWD" = "$HOME" ]; then
         if [ -n "$USER" ]; then
