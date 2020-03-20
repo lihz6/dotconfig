@@ -11,7 +11,7 @@ export no_proxy="$(printf %s, {0..9}).local,localhost",.domain.com
 `~/.profile`
 
 ```bash
-if [ -f "$HOME/.config/profile.bash" ]; then
+if [ -t 1 ] && [ -f "$HOME/.config/profile.bash" ]; then
    . "$HOME/.config/profile.bash"
 fi
 ```
