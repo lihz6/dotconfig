@@ -23,3 +23,9 @@ if [ -f "$HOME/.config/bashrc.bash" ]; then
    . "$HOME/.config/bashrc.bash"
 fi
 ```
+
+## Trouble Shooting
+
+### 1. Ubuntu Terminal doesn't seem to load `~/.profile` automatically.
+
+Checkbox: Preferences > Unamed > Command > Run command as a login shell
