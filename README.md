@@ -19,6 +19,10 @@ fi
 `~/.bashrc`
 
 ```bash
+# Note: the following would reset `$PS1`,
+# please place before anything decorating the `$PS1`,
+# such as Annaconda, Miniconda, etc.
+
 if [ -f "$HOME/.config/bashrc.bash" ]; then
    . "$HOME/.config/bashrc.bash"
 fi
