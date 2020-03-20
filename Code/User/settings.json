@@ -1,7 +1,11 @@
 {
-    "files.autoSave": "afterDelay",
-    "explorer.confirmDelete": false,
-    "window.menuBarVisibility": "toggle",
-    "prettier.singleQuote": true,
-    "prettier.useEditorConfig": false
+  "files.autoSave": "afterDelay",
+  "explorer.confirmDelete": false,
+  "window.menuBarVisibility": "toggle",
+  "prettier.singleQuote": true,
+  "prettier.useEditorConfig": false,
+  "terminal.integrated.shellArgs.linux": ["-l"],
+  "terminal.integrated.shellArgs.osx": [
+    "-l"
+  ]
 }
