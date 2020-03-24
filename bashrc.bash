@@ -6,7 +6,7 @@ set -o noclobber
 shopt -s globstar &>/dev/null
 
 # Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob;
+shopt -s nocaseglob
 
 ## SANE HISTORY DEFAULTS ##
 
@@ -34,8 +34,17 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 # %T equivalent to %H:%M:%S (24-hours format)
 HISTTIMEFORMAT='%F %T '
 
-
 export EDITOR=vim
+
+if [ -d "$HOME/.cargo/bin" ]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+if which go &>/dev/null; then
+    export PATH="$(go env GOPATH)/bin:$PATH"
+    export GOPROXY=https://goproxy.cn
+    export GO111MODULE=on
+fi
 
 # common
 alias today='date +"%Y-%m-%d"'
@@ -77,14 +86,12 @@ else
     export PS1='\[\033]0;\W\007\]\[\033[01;32m\]`__uh`\w\[\033[00m\]\$ '
 fi
 
-if [ -d "$HOME/.cargo/bin" ]; then
-    export PATH="$HOME/.cargo/bin:$PATH"
+if [ $(uname) = Darwin ]; then
+    OS_PATCH="$HOME/.config/macos.bash"
+elif [ $(uname) = Linux ]; then
+    OS_PATCH="$HOME/.config/linux.bash"
+else
+    OS_PATCH="$HOME/.config/other.bash"
 fi
 
-if [ $(uname) = Darwin ]; then
-    . "$HOME/.config/macos.bash"
-elif [ $(uname) = Linux ]; then
-    . "$HOME/.config/linux.bash"
-else
-    . "$HOME/.config/other.bash"
-fi
+[ -f $OS_PATCH ] && . $OS_PATCH
