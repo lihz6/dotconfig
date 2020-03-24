@@ -4,6 +4,7 @@ set -o noclobber
 
 # Turn on recursive globbing (enables ** to recurse all directories)
 shopt -s globstar &>/dev/null
+# shopt -s nullglob &>/dev/null
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
