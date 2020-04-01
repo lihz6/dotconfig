@@ -7,5 +7,33 @@
   "terminal.integrated.shellArgs.linux": ["-l"],
   "terminal.integrated.shellArgs.osx": [
     "-l"
+  ],
+  "C_Cpp.updateChannel": "Insiders",
+  "cmake.configureOnOpen": true,
+  "terminal.integrated.inheritEnv": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/node_modules": true,
+    "**/package-lock.json": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "python.sortImports.args": [
+    "-l",
+    "120"
   ]
 }
