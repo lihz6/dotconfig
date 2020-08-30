@@ -15,6 +15,12 @@ if [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]; then
     source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 fi
 
+function __wg() {
+    if [[ -f "/var/run/wireguard/wg0.name" ]]; then
+        echo '*'
+    fi
+}
+
 # if [ "$(pwd)" = "$HOME" ]; then
 #     FINDER=$(osascript -e 'tell application "Finder"' -e "${1-1} <= (count Finder windows)" -e "get POSIX path of (target of window ${1-1} as alias)" -e 'end tell' 2>/dev/null)
 #     if [ "$FINDER" = "" ]; then

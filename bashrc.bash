@@ -78,12 +78,6 @@ function __uh() {
     fi
 }
 
-function __wg() {
-    if which ip &>/dev/null && ip link show wg0 &>/dev/null; then
-        echo '*'
-    fi
-}
-
 if which git &>/dev/null; then
     export PS1='\[\033]0;\W\007\]`__wg`\[\033[01;32m\]`__uh`\w\[\033[01;36m\]`__git_ps1`\[\033[00m\]\$ '
     alias git-amend='git commit --amend -m "$(git log -1 --format=%B)"'
