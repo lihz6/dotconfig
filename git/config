@@ -8,3 +8,11 @@ stat = diff --stat
 
 [help]
 autocorrect = 1
+
+[credential]
+helper = store
+
+[push]
+default = current
+[pull]
+rebase = true
