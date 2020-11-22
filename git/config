@@ -16,3 +16,5 @@ helper = store
 default = current
 [pull]
 rebase = true
+[core]
+ignoreCase = false

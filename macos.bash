@@ -5,6 +5,7 @@ alias l='ls -CF'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias ipaddr="printf 'http://%s:%s\n' \$(ipconfig getifaddr en0)"
 
 # NOTE: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles

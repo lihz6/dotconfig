@@ -50,6 +50,7 @@ fi
 
 # common
 alias today='date +"%Y-%m-%d"'
+alias bnpm="npm --registry=https://bnpm.byted.org"
 
 if which youtube-dl &>/dev/null; then
     alias youtube-dl="youtube-dl --all-subs"
@@ -58,14 +59,6 @@ fi
 if ! which realpath &>/dev/null && which python &>/dev/null; then
     alias realpath='python -c "import os, sys; print(os.path.realpath(sys.argv[1]))"'
 fi
-
-function git-review() (
-    set -e
-    git diff-index --quiet "${1:-HEAD}"
-    commit_hash=$(git show-ref --head --hash "$1" | head -1)
-    git checkout $commit_hash^ >/dev/null
-    git checkout $commit_hash -- . >/dev/null
-)
 
 function __uh() {
 
@@ -80,11 +73,6 @@ function __uh() {
 
 if which git &>/dev/null; then
     export PS1='\[\033]0;\W\007\]`__wg`\[\033[01;32m\]`__uh`\w\[\033[01;36m\]`__git_ps1`\[\033[00m\]\$ '
-    alias git-amend='git commit --amend -m "$(git log -1 --format=%B)"'
-    alias git-branch='git branch | while read line; do
-        desc=$(git config branch.$(echo "$line" | sed "s/\* //g").description)
-        printf "%-8s\t\t$desc\n" "$line"
-    done'
 else
     export PS1='\[\033]0;\W\007\]\[\033[01;32m\]`__uh`\w\[\033[00m\]\$ '
 fi
