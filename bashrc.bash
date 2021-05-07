@@ -51,6 +51,7 @@ fi
 # common
 alias today='date +"%Y-%m-%d"'
 alias bnpm="npm --registry=https://bnpm.byted.org"
+alias yarn="yarn --registry=https://bnpm.byted.org"
 
 if which youtube-dl &>/dev/null; then
     alias youtube-dl="youtube-dl --all-subs"
